@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  - Application context definition for JPetStore's business layer.
+  - Contains bean references to the transaction manager and to the DAOs in
+  - dataAccessContext-local/jta.xml (see web.xml's "contextConfigLocation").
+  -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+ <bean id="ddk" class="com.sdust.dao.StudentDaoImpl"> 
+ 	<property name="hibernateTemplate"  ref="hibernateTemplate"/>
+</bean>	
+<bean id="dsk" class="com.sdust.service.StudentServiceImpl">
+ 	<property name="studentDao" ref="ddk"/>
+</bean>
+<bean id="getAllStudents" class="com.sdust.actions.GetAllStudentsAction" scope="prototype">
+ 	<property name="studentService" ref="dsk"></property>
+</bean>
+<bean id="insertStudentAction" class="com.sdust.actions.InsertStudentAction" scope="prototype">
+ 	<property name="studentService" ref="dsk"></property>
+ </bean>
+<bean id="deleteStudentAction" class="com.sdust.actions.DeleteStudentAction" scope="prototype">
+ 	<property name="studentService" ref="dsk"></property>
+</bean>
+<bean id="getStudentBySNoAction" class="com.sdust.actions.GetStudentBySNoAction" scope="prototype">
+	<property name="studentService" ref="dsk"></property>
+</bean>
+<bean id="getStudentBySNoAndSClassAndSNameAction" class="com.sdust.actions.GetStudentBySNoAndSClassAndSNameAction" scope="prototype">
+	<property name="studentService" ref="dsk"></property>
+</bean>
+ <bean id="updateStudentAction" class="com.sdust.actions.UpdateStudentAction" scope="prototype">
+ 	<property name="studentService" ref="dsk"></property>
+ </bean>
+ 
+ <bean id="ddi" class="com.course.dao.CourseDaoImpl">
+ 	<property name="hibernateTemplate"  ref="hibernateTemplate"/>
+ </bean>	
+ <bean id="dsi" class="com.course.service.CourseServiceImpl">
+ 	<property name="courseDao" ref="ddi"/>
+ </bean>
+ <bean id="getAllCourses" class="com.course.actions.GetAllCoursesAction" scope="prototype">
+ 	<property name="courseService" ref="dsi"></property>
+ </bean>
+ <bean id="insertAction" class="com.course.actions.InsertCourseAction" scope="prototype">
+ 	<property name="courseService" ref="dsi"></property>
+ </bean>
+<bean id="deleteAction" class="com.course.actions.DeleteCourseAction" scope="prototype">
+ <property name="courseService" ref="dsi"></property>
+ </bean>
+ <bean id="getcourseAction" class="com.course.actions.GetCourseByCNoAction" scope="prototype">
+ <property name="courseService" ref="dsi"></property>
+ </bean>
+ <bean id="updateAction" class="com.course.actions.UpdateCourseAction" scope="prototype">
+ <property name="courseService" ref="dsi"></property>
+ </bean>
+ 
+ <bean id="ddj" class="com.grade.dao.GradeDaoImpl">
+ 	<property name="hibernateTemplate"  ref="hibernateTemplate"/>
+ </bean>	
+ <bean id="dsj" class="com.grade.service.GradeServiceImpl">
+ 	<property name="gradeDao" ref="ddj"/>
+ </bean>
+ <bean id="getAllGrades" class="com.grade.actions.GetAllGradesAction" scope="prototype">
+ 	<property name="gradeService" ref="dsj"></property>
+ </bean>
+ <bean id="insertGradeAction" class="com.grade.actions.InsertGradeAction" scope="prototype">
+ 	<property name="gradeService" ref="dsj"></property>
+ </bean>
+<bean id="deleteGradeAction" class="com.grade.actions.DeleteGradeAction" scope="prototype">
+ <property name="gradeService" ref="dsj"></property>
+ </bean>
+ <bean id="getGradeAction" class="com.grade.actions.GetGradeBySCNoAction" scope="prototype">
+ <property name="gradeService" ref="dsj"></property>
+ </bean>
+ <bean id="updateGradeAction" class="com.grade.actions.UpdateGradeAction" scope="prototype">
+ <property name="gradeService" ref="dsj"></property>
+ </bean>
+</beans>

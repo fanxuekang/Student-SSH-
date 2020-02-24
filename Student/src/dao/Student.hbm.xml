@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+        <hibernate-mapping package="com.sdust.dao">
+        	<class name="Student" table="Student">
+  				<id name="SNo"/>
+				<property name="SName"  type="string"/>
+  				<property name="SClass" type="string"/>
+  				<property name="SSex"  type="string"/>
+  				<property name="SEmail" type="string"/>
+  				<property name="STel"  type="string"/>
+  				<property name="SUsername" type="string"/>
+  				<property name="SPassword" type="string"/>
+        	</class>
+        </hibernate-mapping>
+        
+        

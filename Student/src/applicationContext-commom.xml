@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  - Application context definition for JPetStore's business layer.
+  - Contains bean references to the transaction manager and to the DAOs in
+  - dataAccessContext-local/jta.xml (see web.xml's "contextConfigLocation").
+  -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+			
+ <!-- 数据源信息 -->
+ 
+ <bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+    <property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
+    <property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
+    <property name="username" value="scott"/>
+    <property name="password" value="oracle"/>
+</bean>
+
+<!-- sessionFactory -->
+
+<bean id="mySessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+    <property name="dataSource" ref="myDataSource"/>
+    <property name="mappingResources">
+        <list>
+            <value>com/course/dao/Course.hbm.xml</value>
+            <value>com/grade/dao/Grade.hbm.xml</value> 
+             <value>com/sdust/dao/Student.hbm.xml</value>      
+        </list>
+    </property>
+    <property name="hibernateProperties">
+        <value>
+            hibernate.dialect=org.hibernate.dialect.Oracle9Dialect
+        	hibernate.current_session_context_class=thread
+        	hibernate.show_sql=true
+        	hibernate.format_sql=true
+        	hibernate.hbm2ddl.auto=update        
+        </value>
+    </property>
+</bean>
+  
+<!-- 配置HibernateTemplate -->
+
+<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+    <property name="sessionFactory" ref="mySessionFactory"></property>
+</bean>
+
+<!--配置事务管理器  -->
+
+<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+	<property name="sessionFactory" ref="mySessionFactory"/>
+</bean>
+
+<!-- 配置事务的传播性 -->
+
+<tx:advice id="txAdvice" transaction-manager="transactionManager">
+	<tx:attributes>
+		<tx:method name="get*" read-only="true"/>
+		<tx:method name="*" propagation="REQUIRED"/>
+	</tx:attributes>
+</tx:advice>
+
+<!-- 哪些类的哪些方法参与事务 -->
+
+<aop:config>
+	<aop:pointcut expression="execution(*  com.grade.service.*.*(..))" id="allMethod"/>
+	<aop:advisor advice-ref="txAdvice" pointcut-ref="allMethod"/>
+</aop:config>
+<aop:config>
+	<aop:pointcut expression="execution(*  com.sdust.service.*.*(..))" id="allMethod1"/>
+	<aop:advisor advice-ref="txAdvice" pointcut-ref="allMethod1"/>
+</aop:config>
+<aop:config>
+	<aop:pointcut expression="execution(*  com.course.service.*.*(..))" id="allMethod2"/>
+	<aop:advisor advice-ref="txAdvice" pointcut-ref="allMethod2"/>
+</aop:config>
+</beans>

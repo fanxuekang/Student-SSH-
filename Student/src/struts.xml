@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	<constant name="struts.devMode" value="true" />
+    <package name="course" namespace="/course" extends="struts-default">  
+        <action name="getAllCourses" class="getAllCourses"><!-- spring配置文件中相应的action的bean的名字 -->
+            <result>/course/main.jsp</result>            
+        </action>
+        <action name="getOneCourses" class="getAllCourses"><!-- spring配置文件中相应的action的bean的名字 -->
+            <result>/course/main1.jsp</result>            
+        </action>
+        
+       
+         <action name="insertCourse" class="insertAction">
+            <result>/course/insertgrade.jsp</result>           
+        </action>
+        <action name="deleteCourse" class="deleteAction">
+            <result type="chain">getAllCourses</result>            
+        </action>
+        <action name="getCourse" class="getcourseAction">
+            <result>/course/updategrade.jsp</result>            
+        </action> 
+        
+          <action name="updateCourse" class="updateAction">
+            <result >/course/updatecourse.jsp</result>            
+        </action>
+        
+        <action name="getAllGrades" class="getAllGrades"><!-- spring配置文件中相应的action的bean的名字 -->
+            <result>/course/main.jsp</result>            
+        </action>
+         <action name="insertGrade" class="insertGradeAction">
+            <result type="chain">getAllCourses</result>           
+        </action>
+        <action name="deleteGrade" class="deleteGradeAction">
+            <result type="chain" >getAllCourses</result>            
+        </action>
+        <action name="getGrade" class="getGradeAction">
+            <result>/course/getgrade.jsp</result>            
+        </action> 
+        
+          <action name="updateGrade" class="updateGradeAction">
+            <result type="chain">getAllCourses</result>            
+        </action>
+    </package>
+    
+     <package name="student" namespace="/student" extends="struts-default">  
+       <action name="getOneCourses1" class="getAllCourses"><!-- spring配置文件中相应的action的bean的名字 -->
+            <result>/course/main2.jsp</result>            
+        </action>
+        <action name="getAllStudents" class="getAllStudents"><!-- spring配置文件中相应的action的bean的名字 -->
+            <result>/student/main.jsp</result>            
+        </action>
+         <action name="getOneStudents" class="getAllStudents"><!-- spring配置文件中相应的action的bean的名字 -->
+            <result>/student/main1.jsp</result>            
+        </action>
+        <action name="insertStudent" class="insertStudentAction">
+            <result type="chain">getAllStudents</result>           
+        </action>
+        <action name="deleteStudent" class="deleteStudentAction">
+            <result type="chain">getAllStudents</result>            
+        </action>
+        <action name="getStudentBySNo" class="getStudentBySNoAction">
+            <result>/student/update.jsp</result>            
+        </action>
+         <action name="getStudentBySNo1" class="getStudentBySNoAction">
+            <result>/student/update1.jsp</result>            
+        </action>
+        <action name="getStudentBySNoAndSClassAndSName" class="getStudentBySNoAndSClassAndSNameAction">
+            <result>/student/getStudentBySNoAndSClassAndSName.jsp</result>            
+        </action>
+        <action name="updateStudent" class="updateStudentAction">
+            <result type="chain">getAllStudents</result>            
+        </action> 
+        <action name="updateStudent1" class="updateStudentAction">
+            <result type="chain">getOneStudents</result>            
+        </action> 
+        <action name="select" class="getAllStudents"><!-- spring配置文件中相应的action的bean的名字 -->
+            <result>/student/selectBySNoOrSNameOrSClass.jsp</result>            
+        </action>
+    </package>
+</struts>
